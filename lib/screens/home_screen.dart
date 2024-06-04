@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:movie_catalog/models/movie.dart';
-import 'package:movie_catalog/screens/movie_details_screen.dart';
-import 'package:movie_catalog/widgets/movie_card.dart';
+import 'package:movie_catalog/widgets/movie_carousel.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -18,44 +17,73 @@ class _HomeScreenState extends State<HomeScreen> {
       cast: "Leonardo DiCaprio, Joseph Gordon-Levitt, Ellen Page",
       year: 2010,
       genre: "Sci-Fi",
-      imageUrl: "https://m.media-amazon.com/images/I/71SBgi0X2KL._AC_UF894,1000_QL80_.jpg",
+      imageUrl:
+          "https://m.media-amazon.com/images/I/71SBgi0X2KL._AC_UF894,1000_QL80_.jpg",
     ),
-    // Adicione mais filmes aqui
+    // Add more movies here
   ];
 
-  String selectedGenre = 'All';
+  String selectedGenre = 'Todos';
 
   @override
   Widget build(BuildContext context) {
-    List<Movie> filteredMovies = selectedGenre == 'All'
+    List<Movie> filteredMovies = selectedGenre == 'Todos'
         ? movies
         : movies.where((movie) => movie.genre == selectedGenre).toList();
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Catálogo de Filmes'),
-        actions: [
-          DropdownButton<String>(
-            value: selectedGenre,
-            items: <String>['All', 'Sci-Fi', 'Action', 'Drama'].map((String value) {
-              return DropdownMenuItem<String>(
-                value: value,
-                child: Text(value),
-              );
-            }).toList(),
-            onChanged: (String? newValue) {
-              setState(() {
-                selectedGenre = newValue!;
-              });
-            },
-          ),
-        ],
       ),
-      body: ListView.builder(
-        itemCount: filteredMovies.length,
-        itemBuilder: (ctx, index) {
-          return MovieCard(movie: filteredMovies[index]);
-        },
+      body: SingleChildScrollView(
+        child: Column(
+          children: [
+            DropdownButton<String>(
+              value: selectedGenre,
+              items: <String>['Todos', 'Sci-Fi', 'Ação', 'Drama']
+                  .map((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+              onChanged: (String? newValue) {
+                setState(() {
+                  selectedGenre = newValue!;
+                });
+              },
+            ),
+            _buildMovieSection('Ação', filteredMovies),
+            _buildMovieSection('Drama', filteredMovies),
+            _buildMovieSection('Comédia', filteredMovies),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildMovieSection(String genre, List<Movie> movies) {
+    print('movies $genre: $movies');
+    
+    final List<Movie> genreMovies =
+        movies.where((movie) => movie.genre == genre).toList();
+
+    return Visibility(
+      visible: selectedGenre == 'Todos' || selectedGenre == genre,
+      child: Container(
+        margin: const EdgeInsets.only(top: 60),
+        child: Column(
+          children: [
+            Text(
+              genre,
+              style: TextStyle(fontSize: 30),
+            ),
+            if (genreMovies.isNotEmpty)
+              MovieCarousel(movies: genreMovies)
+            else
+              const Text('Nenhum filme encontrado'),
+          ],
+        ),
       ),
     );
   }
