@@ -11,7 +11,8 @@ class MovieCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-      color: Colors.red,
+      color: const Color.fromARGB(255, 146, 146, 146),
+      borderOnForeground: true,
       
       child: ListTile(
         leading: Image.network(movie.imageUrl),

@@ -24,14 +24,14 @@ class _MovieCarouselState extends State<MovieCarousel> {
           itemCount: widget.movies.length,
           itemBuilder: (BuildContext context, int index, int realIndex) {
             return Padding(
-              padding: EdgeInsets.symmetric(horizontal: 4.0),
+              padding: EdgeInsets.symmetric(horizontal: 0.1),
               child: _buildMovieCard(context, widget.movies[index]),
             );
           },
           options: CarouselOptions(
             height: 200.0,
-            aspectRatio: 16 / 9,
-            viewportFraction: 0.4,
+            // aspectRatio: 16 / 9,
+            viewportFraction: .3,
             initialPage: 0,
             enableInfiniteScroll: true,
             reverse: false,
@@ -63,45 +63,58 @@ class _MovieCarouselState extends State<MovieCarousel> {
   }
 
   Widget _buildMovieCard(BuildContext context, Movie movie) {
-    return Card(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
-      color: Colors.red,
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          Expanded(
-            child: ClipRRect(
-              borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(8.0),
-                topRight: Radius.circular(8.0),
-              ),
-              child: Image.network(
-                movie.imageUrl,
-                fit: BoxFit.cover,
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (ctx) => MovieDetailsScreen(movie: movie),
+          ),
+        );
+      },
+      child: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
+        color: const Color.fromARGB(255, 220, 220, 220),
+        // borderOnForeground: true,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Expanded(
+              child: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(8.0),
+                  topRight: Radius.circular(8.0),
+                ),
+                child: Image.network(
+                  movie.imageUrl,
+                  fit: BoxFit.contain,
+                  height: 1000,
+                ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  movie.title,
-                  style: const TextStyle(
-                    fontSize: 14.0,
-                    fontWeight: FontWeight.bold,
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    movie.title,
+                    style: const TextStyle(
+                      fontSize: 14.0,
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
-                ),
-                const SizedBox(height: 4.0),
-                Text(
-                  '${movie.year}',
-                  style: const TextStyle(fontSize: 12.0),
-                ),
-              ],
+                  const SizedBox(height: 4.0),
+                  Text(
+                    '${movie.year}',
+                    style: const TextStyle(fontSize: 12.0),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
