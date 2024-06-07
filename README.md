@@ -2,6 +2,8 @@
 
 ## FatecFlix - Aplicativo de Catálogo de Filmes
 
+** Grupo: Barbara Hellen, Bruna Costa, Lucas Gradilone, Nathália Regina
+
 Em grupos de até 4 alunos, desenvolver o projeto de um aplicativo em Flutter/DART de catálogo de filmes e entregá-lo até a data informada abaixo, atentando-se aos requisitos disponíveis a seguir.
 
 O objetivo do aplicativo é permitir que o usuário visualize as principais informações sobre filmes, como título, sinopse, elenco principal, ano de lançamento e gênero.

@@ -74,7 +74,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Catálogo de Filmes'),
+        title: const Text('Catálogo de Filmes: Barbara, Bruna, Lucas Gradilone, Nathália'),
       ),
       body: SingleChildScrollView(
         child: Column(
