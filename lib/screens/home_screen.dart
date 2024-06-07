@@ -59,7 +59,7 @@ class _HomeScreenState extends State<HomeScreen> {
       genre: "Ação",
       imageUrl: "https://m.media-amazon.com/images/M/MV5BN2EyZjM3NzUtNWUzMi00MTgxLWI0NTctMzY4M2VlOTdjZWRiXkEyXkFqcGdeQXVyNDUzOTQ5MjY@._V1_.jpg",
     ),
-    // Add more movies here
+    
   ];
 
   String selectedGenre = 'Todos';
@@ -110,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             filteredMovies.isNotEmpty 
             ? SizedBox(
-              height: MediaQuery.of(context).size.height - 200, // Adjust height as needed
+              height: MediaQuery.of(context).size.height - 200, 
               child: MoviePageView(movies: filteredMovies),
             )
             : Padding(

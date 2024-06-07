@@ -30,7 +30,6 @@ class _MovieCarouselState extends State<MovieCarousel> {
           },
           options: CarouselOptions(
             height: 200.0,
-            // aspectRatio: 16 / 9,
             viewportFraction: .3,
             initialPage: 0,
             enableInfiniteScroll: true,
@@ -74,7 +73,6 @@ class _MovieCarouselState extends State<MovieCarousel> {
       child: Card(
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8.0)),
         color: const Color.fromARGB(255, 220, 220, 220),
-        // borderOnForeground: true,
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.start,
           mainAxisAlignment: MainAxisAlignment.start,
