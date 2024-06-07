@@ -63,12 +63,14 @@ class _HomeScreenState extends State<HomeScreen> {
   ];
 
   String selectedGenre = 'Todos';
+  String searchQuery = '';
 
   @override
   Widget build(BuildContext context) {
-    List<Movie> filteredMovies = selectedGenre == 'Todos'
-        ? movies
-        : movies.where((movie) => movie.genre == selectedGenre).toList();
+    List<Movie> filteredMovies = movies.where((movie) {
+      return (selectedGenre == 'Todos' || movie.genre == selectedGenre) &&
+             (searchQuery.isEmpty || movie.title.toLowerCase().contains(searchQuery.toLowerCase()));
+    }).toList();
 
     return Scaffold(
       appBar: AppBar(
@@ -77,6 +79,20 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                decoration: InputDecoration(
+                  labelText: 'Pesquisar Filme',
+                  border: OutlineInputBorder(),
+                ),
+                onChanged: (value) {
+                  setState(() {
+                    searchQuery = value;
+                  });
+                },
+              ),
+            ),
             DropdownButton<String>(
               value: selectedGenre,
               items: <String>['Todos', 'Sci-Fi', 'Ação', 'Drama']
@@ -92,9 +108,14 @@ class _HomeScreenState extends State<HomeScreen> {
                 });
               },
             ),
-            SizedBox(
-              height: MediaQuery.of(context).size.height - 150, // Adjust height as needed
+            filteredMovies.isNotEmpty 
+            ? SizedBox(
+              height: MediaQuery.of(context).size.height - 200, // Adjust height as needed
               child: MoviePageView(movies: filteredMovies),
+            )
+            : Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Text('Nenhum filme encontrado!', style: TextStyle(fontSize: 30),),
             ),
           ],
         ),
